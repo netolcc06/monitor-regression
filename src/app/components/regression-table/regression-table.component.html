@@ -1,0 +1,128 @@
+<!-- {{worseStatus}} -->
+<!-- {{this.worseStatus["count"]}} -->
+
+<div class="pickers">
+  <mat-form-field>
+    <mat-label>Choose base date</mat-label>
+    <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="pickerBaseDate" [formControl]="baseDate">
+    <mat-hint>YYYY-MM-DD</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="pickerBaseDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerBaseDate></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Choose comparison date</mat-label>
+    <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="pickerComparisonDate" [formControl]="comparisonDate">
+    <mat-hint>YYYY-MM-DD</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="pickerComparisonDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerComparisonDate></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="callbackCompare()">
+    Compare
+  </button>
+</div>
+
+<h2> Alert </h2>
+
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event, dataSourceWorse)" placeholder="Ex. QF_NIA" #input>
+</mat-form-field>
+
+<div class="item" *ngIf="isLoading; else tableWorse">
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div> 
+
+<ng-template #tableWorse>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSourceWorse" matSort matSortWorse>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+    
+      <!-- ComparisonDate Column -->
+      <ng-container matColumnDef="comparison_date">
+          <th mat-header-cell *matHeaderCellDef> Old Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.comparison_date | date: "yyyy-MM-dd":"UTC"}} </td>
+        </ng-container>
+      
+      <!-- ComparisonTimeCPU Column -->
+      <ng-container matColumnDef="comparison_time_cpu">
+      <th mat-header-cell *matHeaderCellDef> Old Time CPU </th>
+      <td mat-cell *matCellDef="let element"> {{element.comparison_time_cpu}} </td>
+      </ng-container>
+  
+      <!-- BaseDate Column -->
+      <ng-container matColumnDef="base_date">
+        <th mat-header-cell *matHeaderCellDef> New Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.base_date | date: "yyyy-MM-dd":"UTC"}} </td>
+      </ng-container>
+    
+      <!-- BaseTimeCPU Column -->
+      <ng-container matColumnDef="base_time_cpu">
+        <th mat-header-cell *matHeaderCellDef> New Time CPU </th>
+        <td mat-cell *matCellDef="let element"> {{element.base_time_cpu}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>
+</ng-template>
+<mat-paginator [pageSizeOptions]="[10, 20, 30, 40]" aria-label="Select page of benchmarks" #matPaginatorWorse></mat-paginator>
+
+<h2> Improved benchmarks </h2>
+
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event, dataSourceBetter)" placeholder="Ex. QF_NIA" #input>
+</mat-form-field>
+
+<div class="item" *ngIf="isLoading; else tableImproved">
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div>
+
+<ng-template #tableImproved>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSourceBetter" matSort matSortBetter>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+    
+      <!-- ComparisonDate Column -->
+      <ng-container matColumnDef="comparison_date">
+          <th mat-header-cell *matHeaderCellDef> Old Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.comparison_date | date: "yyyy-MM-dd":"UTC"}} </td>
+        </ng-container>
+      
+      <!-- ComparisonTimeCPU Column -->
+      <ng-container matColumnDef="comparison_time_cpu">
+      <th mat-header-cell *matHeaderCellDef> Old Time CPU </th>
+      <td mat-cell *matCellDef="let element"> {{element.comparison_time_cpu}} </td>
+      </ng-container>
+    
+        <!-- BaseDate Column -->
+        <ng-container matColumnDef="base_date">
+          <th mat-header-cell *matHeaderCellDef> New Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.base_date | date: "yyyy-MM-dd":"UTC"}} </td>
+        </ng-container>
+      
+        <!-- BaseTimeCPU Column -->
+        <ng-container matColumnDef="base_time_cpu">
+          <th mat-header-cell *matHeaderCellDef> New Time CPU </th>
+          <td mat-cell *matCellDef="let element"> {{element.base_time_cpu}} </td>
+        </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</ng-template>
+<mat-paginator [pageSizeOptions]="[10, 20, 30, 40]" aria-label="Select page of benchmarks" #matPaginatorBetter></mat-paginator>
+
+<!-- <td>{{dataSource | json}}</td> -->

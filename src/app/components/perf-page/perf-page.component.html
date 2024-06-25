@@ -1,0 +1,14 @@
+<h1> Graphs </h1>
+
+<mat-form-field>
+    <mat-label>Report type</mat-label>
+    <mat-select [(value)]="selectedValue" name="reportOption">
+        <mat-option *ngFor="let reportOption of reportOptions" [value]="reportOption.value">{{reportOption.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<div class="container">
+    <div class="item"  *ngFor="let logic of logics">
+        <app-test-graph [logic]=logic.name [report]="selectedValue"></app-test-graph>
+    </div>
+</div>

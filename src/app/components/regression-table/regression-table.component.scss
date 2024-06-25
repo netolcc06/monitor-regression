@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+  }
+  
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.pickers{
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  justify-content: center;
+  gap: 1rem;
+
+  mat-form-field {
+    width: min-content
+  }
+
+  button {
+    margin-bottom: 1.2rem;
+  }
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100px;
+}
